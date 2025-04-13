@@ -1,8 +1,8 @@
 <p align="center">
   <picture>
-    <source srcset="text_logo_square.png" media="(prefers-color-scheme: dark)" width="500">
-    <source srcset="text_logo_square.png" media="(prefers-color-scheme: dark)" width="500">
-    <img src="text_logo_square.png" alt="Crunch Time Logo" width="500">
+    <source srcset="public/images/text_logo_square.png" media="(prefers-color-scheme: dark)" width="500">
+    <source srcset="public/images/text_logo_square.png" media="(prefers-color-scheme: dark)" width="500">
+    <img src="public/images/text_logo_square.png" alt="Crunch Time Logo" width="500">
   </picture>
   <h2 align="center">
     Crunch Time
