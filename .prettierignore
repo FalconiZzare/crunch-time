@@ -2,5 +2,6 @@
 node_modules
 .idea
 components/ui
+prisma/generated
 package-lock.json
 package.json
