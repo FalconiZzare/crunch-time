@@ -1,9 +1,9 @@
 {
-  "name": "my-app",
+  "name": "crunch-time",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@bprogress/next": "^3.2.11",
+    "@neondatabase/serverless": "^1.0.0",
+    "@prisma/adapter-neon": "^6.6.0",
+    "@prisma/client": "^6.6.0",
     "@radix-ui/react-slot": "^1.2.0",
     "@tanstack/react-query": "^5.73.3",
     "better-auth": "^1.2.6",
