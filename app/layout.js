@@ -2,6 +2,7 @@ import { Noto_Sans } from "next/font/google";
 import "./globals.css";
 import Providers from "@/app/providers";
 import Navbar from "@/components/Layout/Navbar";
+import NavWrapper from "@/components/Layout/NavWrapper";
 
 const noto_sans = Noto_Sans({
   subsets: ["latin"],
@@ -20,7 +21,9 @@ export default function RootLayout({ children }) {
       <body className={noto_sans.className}>
         <Providers>
           <div className={"grid min-h-[100dvh] grid-rows-[1fr_auto]"}>
-            <Navbar />
+            <NavWrapper>
+              <Navbar />
+            </NavWrapper>
             {children}
           </div>
         </Providers>

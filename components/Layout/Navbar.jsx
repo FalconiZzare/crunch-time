@@ -35,9 +35,11 @@ const Navbar = () => {
           ))}
         </div>
         <div className={"flex items-center gap-2"}>
-          <Button className={"rounded-full hover:bg-primary/85"}>
-            <p className={"font-semibold"}>Sign In</p>
-          </Button>
+          <Link href={"/sign-in"}>
+            <Button className={"rounded-full hover:bg-primary/85"}>
+              <p className={"font-semibold"}>Sign In</p>
+            </Button>
+          </Link>
           <Button className={"size-9 rounded-full hover:bg-primary/85 md:size-auto"}>
             <ShoppingBag />
             <p className={"hidden font-semibold md:block"}>Cart</p>

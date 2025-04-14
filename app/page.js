@@ -28,7 +28,7 @@ export default function Home() {
             glowColor="hsl(var(--primary))"
             animationDuration={0.5}
             pauseBetweenAnimations={1.5}
-            className={"mt-5 justify-start text-sm text-background"}
+            className={"mt-5 justify-start text-background"}
           />
 
           <p
