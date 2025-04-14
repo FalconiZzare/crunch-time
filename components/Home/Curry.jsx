@@ -1,16 +1,16 @@
 import MenuCategory from "@/components/MenuCategory";
-import { Salad } from "lucide-react";
+import { Soup } from "lucide-react";
 import React from "react";
 
 const Rice = () => {
   return (
     <MenuCategory
-      id={"rice"}
+      id={"curry"}
       dishes={Array(10).fill(null)}
-      title={"Rice"}
-      description={"Classic staple served with various sides and flavors."}
+      title={"Curry"}
+      description={"Rich, spicy, and flavorful dishes with gravy."}
     >
-      <Salad className={"size-8 text-primary md:size-9"} />
+      <Soup className={"size-8 text-primary md:size-9"} />
     </MenuCategory>
   );
 };

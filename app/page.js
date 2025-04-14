@@ -1,6 +1,11 @@
 import Container from "@/components/Container";
 import TrueFocus from "@/components/ui/true-focus";
 import Rice from "@/components/Home/Rice";
+import Curry from "@/components/Home/Curry";
+import Snacks from "@/components/Home/Snacks";
+import Desserts from "@/components/Home/Desserts";
+import Drinks from "@/components/Home/Drinks";
+import StreetFood from "@/components/Home/StreetFood";
 
 export default function Home() {
   return (
@@ -36,7 +41,13 @@ export default function Home() {
           </p>
         </div>
       </Container>
+
       <Rice />
+      <Curry />
+      <Snacks />
+      <Desserts />
+      <Drinks />
+      <StreetFood />
     </div>
   );
 }
