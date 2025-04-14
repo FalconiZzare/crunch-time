@@ -17,7 +17,10 @@ const Sidebar = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className={"size-9 rounded-full hover:bg-primary/5 xl:hidden"} variant={"ghost"}>
+        <Button
+          className={"size-9 rounded-full text-foreground hover:bg-primary/5 xl:hidden"}
+          variant={"ghost"}
+        >
           <AlignRight />
         </Button>
       </SheetTrigger>
@@ -27,7 +30,9 @@ const Sidebar = () => {
           <SheetDescription className={"sr-only"}>Sidebar Navigation Menu</SheetDescription>
         </SheetHeader>
 
-        <p className={"absolute left-4 top-4 text-xl font-semibold"}>Menu Categories</p>
+        <p className={"absolute left-4 top-4 text-xl font-semibold text-foreground"}>
+          Menu Categories
+        </p>
 
         <div className={"mt-10 w-full"}>
           {NAV_ITEMS.map((item, index) => (
@@ -37,7 +42,9 @@ const Sidebar = () => {
                 className={"flex flex-1 items-center border-b border-primary/30 py-4"}
               >
                 {item.icon}
-                <p className={"ml-4 text-lg font-semibold tracking-wide"}>{item.name}</p>
+                <p className={"ml-4 text-lg font-semibold tracking-wide text-foreground"}>
+                  {item.name}
+                </p>
               </Link>
             </SheetClose>
           ))}

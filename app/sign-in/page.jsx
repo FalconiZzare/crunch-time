@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { House } from "lucide-react";
 import Link from "next/link";
 import { Icons } from "@/components/Icons";
+import GoogleProvider from "@/app/sign-in/GoogleProvider";
 
 const Page = () => {
   return (
@@ -42,15 +43,7 @@ const Page = () => {
 
           <p className={"mb-6 mt-20 text-xl font-bold tracking-wide text-input"}>Welcome Back!</p>
 
-          <Button
-            variant={"outline"}
-            className={
-              "mt-4 w-full items-center justify-center gap-5 py-5 text-base md:w-10/12 [&_svg]:size-5"
-            }
-          >
-            <Icons.google />
-            Continue with Google
-          </Button>
+          <GoogleProvider />
 
           <Button
             variant={"outline"}

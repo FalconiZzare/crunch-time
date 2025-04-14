@@ -7,12 +7,13 @@ export async function middleware(request) {
   });
 
   if (!sessionCookie) {
-    return NextResponse.redirect(new URL("/sing-in", request.url));
+    const callbackUrl = encodeURIComponent(request.nextUrl.pathname + request.nextUrl.search);
+    return NextResponse.redirect(new URL(`/sign-in?callbackUrl=${callbackUrl}`, request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/manage"]
+  matcher: ["/manage", "/profile"]
 };
