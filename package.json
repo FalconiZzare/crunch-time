@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "prisma generate",
     "format:write": "prettier --write \"./**/*.{js,jsx,ts,tsx,mdx,md,json,css,scss}\" --config ../crunch-time/.prettierrc"
   },
   "dependencies": {
