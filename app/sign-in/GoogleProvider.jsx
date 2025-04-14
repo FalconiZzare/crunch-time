@@ -5,6 +5,7 @@ import { Icons } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 const GoogleProvider = () => {
   const searchParams = useSearchParams();
@@ -18,16 +19,18 @@ const GoogleProvider = () => {
   };
 
   return (
-    <Button
-      variant={"outline"}
-      className={
-        "mt-4 w-full items-center justify-center gap-5 py-5 text-base md:w-10/12 [&_svg]:size-5"
-      }
-      onClick={signIn}
-    >
-      <Icons.google />
-      Continue with Google
-    </Button>
+    <Suspense>
+      <Button
+        variant={"outline"}
+        className={
+          "mt-4 w-full items-center justify-center gap-5 py-5 text-base md:w-10/12 [&_svg]:size-5"
+        }
+        onClick={signIn}
+      >
+        <Icons.google />
+        Continue with Google
+      </Button>
+    </Suspense>
   );
 };
 
