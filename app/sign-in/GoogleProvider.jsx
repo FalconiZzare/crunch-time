@@ -4,25 +4,11 @@ import React from "react";
 import { Icons } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 
 const GoogleProvider = () => {
-  return (
-    <Suspense>
-      <ProviderBody />
-    </Suspense>
-  );
-};
-
-const ProviderBody = () => {
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
-
   const signIn = async () => {
     await authClient.signIn.social({
-      provider: "google",
-      callbackURL: callbackUrl
+      provider: "google"
     });
   };
 
