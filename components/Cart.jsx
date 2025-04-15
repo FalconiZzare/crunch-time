@@ -294,7 +294,7 @@ const Cart = () => {
                 disabled={isSessionPending || isPending}
                 onClick={handleOrderPlacement}
               >
-                Confirm Order
+                {isPending ? "Placing..." : "Confirm Order"}
               </Button>
             </>
           )}
