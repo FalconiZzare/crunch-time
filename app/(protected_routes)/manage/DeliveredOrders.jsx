@@ -18,7 +18,7 @@ const DeliveredOrders = () => {
 
   return (
     <Container>
-      <SectionHeader title={"Complete Orders"}>
+      <SectionHeader title={"Delivered Orders"}>
         <Notebook className={"size-8 text-primary md:size-9"} />
       </SectionHeader>
       <div
