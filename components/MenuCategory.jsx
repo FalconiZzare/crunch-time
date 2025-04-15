@@ -6,18 +6,11 @@ import { Plus } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { useQuery } from "@tanstack/react-query";
 import { getDishes } from "@/actions/getDishes";
 import { Skeleton } from "@/components/ui/skeleton";
+import MenuItem from "@/components/MenuItem";
 
 const MenuCategory = ({ id, title, description, children }) => {
   const { data, isPending } = useQuery({
@@ -56,7 +49,7 @@ const MenuCategory = ({ id, title, description, children }) => {
                     <div className={"size-[100px] min-h-[100px] min-w-[100px]"}>
                       <Image
                         src={item.image}
-                        alt={"burger"}
+                        alt={item.name}
                         height={100}
                         width={100}
                         className={"size-full rounded-lg object-cover object-center"}
@@ -77,9 +70,6 @@ const MenuCategory = ({ id, title, description, children }) => {
                         <Button
                           size={"icon"}
                           className={"size-7 rounded-full bg-foreground hover:bg-foreground/90"}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                          }}
                         >
                           <Plus className={"text-input"} />
                         </Button>
@@ -88,55 +78,8 @@ const MenuCategory = ({ id, title, description, children }) => {
                   </div>
                 </div>
               </DialogTrigger>
-              <DialogContent
-                className={
-                  "flex w-11/12 max-w-lg flex-col items-center justify-center rounded-lg md:w-full md:flex-row"
-                }
-              >
-                <DialogHeader className={"sr-only"}>
-                  <DialogTitle className={"sr-only"}>{item.name}</DialogTitle>
-                  <DialogDescription className={"sr-only"}>{item.description}</DialogDescription>
-                </DialogHeader>
-                <div className="size-[200px] min-h-[200px] min-w-[200px]">
-                  <Image
-                    src={item.image}
-                    height={200}
-                    width={200}
-                    alt={"burger"}
-                    className={"size-full rounded-lg object-cover object-center"}
-                  />
-                </div>
-                <div className="flex h-full flex-col justify-evenly">
-                  <h2 className="text-2xl font-bold">{item.name}</h2>
-                  <div className="mt-[0.25rem]">{item.description}</div>
-                  <p className={"mt-3 font-bold uppercase text-foreground/70"}>Price</p>
-                  <p className="mt-1 w-max text-sm font-semibold">{`Tk ${item.price}`}</p>
-                  <div className={"mt-4 flex items-center justify-center gap-3"}>
-                    <div className={"flex items-center gap-2"}>
-                      <Button
-                        variant={"ghost"}
-                        size={"icon"}
-                        className={"size-5 rounded-full bg-foreground/20 [&_svg]:size-3"}
-                      >
-                        <Plus />
-                      </Button>
-                      <p className={"text-lg font-medium"}>1</p>
-                      <Button
-                        variant={"ghost"}
-                        size={"icon"}
-                        className={"size-5 rounded-full bg-foreground/20 [&_svg]:size-3"}
-                      >
-                        <Plus />
-                      </Button>
-                    </div>
-                    <Button className={"rounded-full bg-foreground px-5 text-xs font-normal"}>
-                      <p>৳ 33380</p>
-                      <Separator orientation={"vertical"} className={"bg-background/30"} />
-                      <p>Add to order</p>
-                    </Button>
-                  </div>
-                </div>
-              </DialogContent>
+
+              <MenuItem item={item} />
             </Dialog>
           ))
         ) : (

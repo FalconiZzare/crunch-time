@@ -3,7 +3,6 @@
 import React from "react";
 import Logo from "@/components/Logo/Logo";
 import Text from "@/components/Logo/Text";
-import { ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NAV_ITEMS } from "@/constants/Navitems";
 import Link from "next/link";
@@ -11,6 +10,7 @@ import Sidebar from "@/components/Layout/Sidebar";
 import UserPopover from "@/components/Layout/UserPopover";
 import { authClient } from "@/lib/auth-client";
 import { Skeleton } from "@/components/ui/skeleton";
+import Cart from "@/components/Cart";
 
 const Navbar = () => {
   const { data: session, isPending } = authClient.useSession();
@@ -53,10 +53,7 @@ const Navbar = () => {
           ) : (
             <UserPopover session={session} />
           )}
-          <Button className={"size-9 rounded-full hover:bg-primary/85 md:size-auto"}>
-            <ShoppingBag />
-            <p className={"hidden font-semibold md:block"}>Cart</p>
-          </Button>
+          <Cart />
           <Sidebar />
         </div>
       </div>
