@@ -6,7 +6,6 @@ const Drinks = () => {
   return (
     <MenuCategory
       id={"drinks"}
-      dishes={Array(10).fill(null)}
       title={"Drinks"}
       description={"Refreshing beverages to cool or energize."}
     >

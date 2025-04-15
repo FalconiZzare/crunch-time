@@ -6,7 +6,6 @@ const Rice = () => {
   return (
     <MenuCategory
       id={"rice"}
-      dishes={Array(10).fill(null)}
       title={"Rice"}
       description={"Classic staple served with various sides and flavors."}
     >

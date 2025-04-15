@@ -3,6 +3,7 @@ import "./globals.css";
 import Providers from "@/app/providers";
 import Navbar from "@/components/Layout/Navbar";
 import NavWrapper from "@/components/Layout/NavWrapper";
+import { Toaster } from "@/components/ui/sonner";
 
 const noto_sans = Noto_Sans({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
             </NavWrapper>
             {children}
           </div>
+          <Toaster position={"top-center"} richColor />
         </Providers>
       </body>
     </html>

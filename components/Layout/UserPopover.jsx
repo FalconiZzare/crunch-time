@@ -1,5 +1,6 @@
 import React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { PopoverClose } from "@radix-ui/react-popover";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ChefHat, LogOut, Package, ShieldCheck, UserRoundPen } from "lucide-react";
@@ -15,44 +16,54 @@ const UserPopover = ({ session }) => {
           </Button>
         </PopoverTrigger>
         <PopoverContent className={"w-48 border border-primary/30 shadow-lg"}>
-          <Link href="/profile">
-            <SubNavItem>
-              <UserRoundPen />
-              Profile
-            </SubNavItem>
-          </Link>
-
-          {session.user.role === "chef" && (
-            <Link href="/manage">
+          <PopoverClose asChild>
+            <Link href="/profile">
               <SubNavItem>
-                <ChefHat />
-                Kitchen
+                <UserRoundPen />
+                Profile
               </SubNavItem>
             </Link>
+          </PopoverClose>
+
+          {session.user.role === "chef" && (
+            <PopoverClose asChild>
+              <Link href="/manage">
+                <SubNavItem>
+                  <ChefHat />
+                  Kitchen
+                </SubNavItem>
+              </Link>
+            </PopoverClose>
           )}
 
           {session.user.role === "delivery" && (
-            <Link href="/manage">
-              <SubNavItem>
-                <Package />
-                Deliveries
-              </SubNavItem>
-            </Link>
+            <PopoverClose asChild>
+              <Link href="/manage">
+                <SubNavItem>
+                  <Package />
+                  Deliveries
+                </SubNavItem>
+              </Link>
+            </PopoverClose>
           )}
 
           {session.user.role === "admin" && (
-            <Link href="/manage">
-              <SubNavItem>
-                <ShieldCheck />
-                Management
-              </SubNavItem>
-            </Link>
+            <PopoverClose asChild>
+              <Link href="/manage">
+                <SubNavItem>
+                  <ShieldCheck />
+                  Management
+                </SubNavItem>
+              </Link>
+            </PopoverClose>
           )}
 
-          <SubNavItem onClick={async () => await authClient.signOut()}>
-            <LogOut />
-            Sign Out
-          </SubNavItem>
+          <PopoverClose asChild>
+            <SubNavItem onClick={async () => await authClient.signOut()}>
+              <LogOut />
+              Sign Out
+            </SubNavItem>
+          </PopoverClose>
         </PopoverContent>
       </div>
     </Popover>
