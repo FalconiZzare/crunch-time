@@ -241,7 +241,7 @@ const AddDish = () => {
   });
 
   return (
-    <Container className={"mt-[3.4rem] md:mt-[4.5rem]"}>
+    <Container>
       <SectionHeader title={"Create A Dish"}>
         <HardDriveUpload className={"size-8 text-primary md:size-9"} />
       </SectionHeader>

@@ -2,24 +2,24 @@
 
 import React from "react";
 import Container from "@/components/Container";
-import { LoaderCircle, NotebookPen } from "lucide-react";
+import { LoaderCircle, Notebook } from "lucide-react";
 import SectionHeader from "@/app/(protected_routes)/manage/SectionHeader";
 import { useQuery } from "@tanstack/react-query";
 import { getOrders } from "@/actions/getOrders";
 import OrdersList from "@/app/(protected_routes)/manage/OrdersList";
 
-const ListOrders = () => {
+const DeliveredOrders = () => {
   const { data: orders, isPending } = useQuery({
-    queryKey: ["getOrders"],
+    queryKey: ["getCompleteOrders"],
     queryFn: async () => {
-      return await getOrders({ limit: 100, page: 1 });
+      return await getOrders({ limit: 100, page: 1, strategyType: "completed" });
     }
   });
 
   return (
-    <Container className={"mt-[3.4rem] md:mt-[4.5rem]"}>
-      <SectionHeader title={"Pending Orders"}>
-        <NotebookPen className={"size-8 text-primary md:size-9"} />
+    <Container>
+      <SectionHeader title={"Complete Orders"}>
+        <Notebook className={"size-8 text-primary md:size-9"} />
       </SectionHeader>
       <div
         className={
@@ -34,7 +34,7 @@ const ListOrders = () => {
           orders.payload.map((order) => <OrdersList key={order.orderId} order={order} />)
         ) : (
           <div className={"col-span-4 py-20 text-center"}>
-            <p>No Pending Orders Found</p>
+            <p>No Complete Orders Found</p>
           </div>
         )}
       </div>
@@ -42,4 +42,4 @@ const ListOrders = () => {
   );
 };
 
-export default ListOrders;
+export default DeliveredOrders;

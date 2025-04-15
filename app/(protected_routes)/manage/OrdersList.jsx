@@ -42,8 +42,8 @@ const OrdersList = ({ order, ...props }) => {
     >
       <CardHeader className="border-b border-foreground/40 pb-2.5">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg font-medium">
-            Order #<span className={"uppercase"}>{order.orderId.substring(0, 8)}</span>
+          <CardTitle className="text-base font-medium">
+            Order <span className={"text-xs uppercase"}>#{order.orderId.substring(0, 7)}</span>
           </CardTitle>
           <div className="flex gap-2">
             <Badge className={getOrderStatusBadge(order.orderStatus)}>{order.orderStatus}</Badge>
@@ -104,17 +104,19 @@ const OrdersList = ({ order, ...props }) => {
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex items-center justify-center gap-2 pb-4 pt-2">
-        <Button
-          variant={"ghost"}
-          size="sm"
-          className={
-            "w-full font-semibold tracking-wide hover:border hover:border-primary hover:text-primary"
-          }
-        >
-          INITIATE NEXT STATUS
-        </Button>
-      </CardFooter>
+      {!order.isDelivered && (
+        <CardFooter className="flex items-center justify-center gap-2 pb-4 pt-2">
+          <Button
+            variant={"ghost"}
+            size="sm"
+            className={
+              "w-full border border-dashed border-primary/30 font-semibold tracking-wide hover:text-primary"
+            }
+          >
+            INITIATE NEXT STATUS
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 };
