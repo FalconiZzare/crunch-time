@@ -3,7 +3,7 @@ import AddDish from "@/app/(protected_routes)/manage/AddDish";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
 import ProtectedLayout from "@/components/ProtectedLayout";
-import ListOrders from "@/app/(protected_routes)/manage/ListOrders";
+import PendingOrders from "@/app/(protected_routes)/manage/PendingOrders";
 
 const Page = async () => {
   const session = await auth.api.getSession({
@@ -14,7 +14,7 @@ const Page = async () => {
     <ProtectedLayout requiredRole={"administrator"} session={session}>
       <div>
         <AddDish />
-        <ListOrders />
+        <PendingOrders />
       </div>
     </ProtectedLayout>
   );
