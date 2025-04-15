@@ -51,7 +51,7 @@ const MenuItem = ({ item }) => {
         />
       </div>
       <div className="flex h-full flex-col justify-evenly">
-        <h2 className="text-2xl font-bold">{item.name}</h2>
+        <h2 className="text-2xl font-bold capitalize">{item.name}</h2>
         <div className="mt-[0.25rem]">{item.description}</div>
         <div className={"mt-4 flex items-center justify-between gap-3"}>
           <div>

@@ -56,7 +56,7 @@ const MenuCategory = ({ id, title, description, children }) => {
                       />
                     </div>
                     <div className={"flex h-full w-full flex-col py-2 text-left"}>
-                      <p className={"font-semibold"}>{item.name}</p>
+                      <p className={"font-semibold capitalize"}>{item.name}</p>
                       <p
                         className={cn(
                           "text-xs font-normal tracking-tight",
