@@ -21,9 +21,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const MenuCategory = ({ id, title, description, children }) => {
   const { data, isPending } = useQuery({
-    queryKey: [`getDishes${title.toLowerCase()}`],
+    queryKey: [`getDishes${id.toLowerCase()}`],
     queryFn: async () => {
-      return await getDishes(title.toLowerCase());
+      return await getDishes(id.toLowerCase());
     }
   });
 

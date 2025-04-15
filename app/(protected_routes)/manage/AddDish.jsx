@@ -22,9 +22,131 @@ import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { createDish } from "@/actions/createDish";
 
+// Food Builder Pattern Implementation
+class FoodItem {
+  constructor(builder) {
+    this.name = builder.name;
+    this.description = builder.description;
+    this.price = builder.price;
+    this.type = builder.type;
+    this.image = builder.image;
+  }
+}
+
+class FoodBuilder {
+  constructor() {
+    this.name = "";
+    this.description = "";
+    this.price = "";
+    this.type = "";
+    this.image = null;
+  }
+
+  setName(name) {
+    this.name = name;
+    return this;
+  }
+
+  setDescription(description) {
+    this.description = description;
+    return this;
+  }
+
+  setPrice(price) {
+    this.price = price;
+    return this;
+  }
+
+  setType(type) {
+    this.type = type;
+    return this;
+  }
+
+  setImage(image) {
+    this.image = image;
+    return this;
+  }
+
+  build() {
+    return new FoodItem(this);
+  }
+}
+
+// Factory for creating specialized food builders based on type
+class FoodBuilderFactory {
+  static getBuilder(type) {
+    switch (type) {
+      case "rice":
+        return new RiceBuilder();
+      case "curry":
+        return new CurryBuilder();
+      case "snacks":
+        return new SnacksBuilder();
+      case "desserts":
+        return new DessertsBuilder();
+      case "drinks":
+        return new DrinksBuilder();
+      case "street-food":
+        return new StreetFoodBuilder();
+      default:
+        return new FoodBuilder();
+    }
+  }
+}
+
+// Specialized builders with default values or behavior
+class RiceBuilder extends FoodBuilder {
+  constructor() {
+    super();
+    this.type = "rice";
+    // Could set default values for rice items
+  }
+}
+
+class CurryBuilder extends FoodBuilder {
+  constructor() {
+    super();
+    this.type = "curry";
+    // Could set default values for curry items
+  }
+}
+
+class SnacksBuilder extends FoodBuilder {
+  constructor() {
+    super();
+    this.type = "snacks";
+    // Could set default values for snacks
+  }
+}
+
+class DessertsBuilder extends FoodBuilder {
+  constructor() {
+    super();
+    this.type = "desserts";
+    // Could set default values for desserts
+  }
+}
+
+class DrinksBuilder extends FoodBuilder {
+  constructor() {
+    super();
+    this.type = "drinks";
+    // Could set default values for drinks
+  }
+}
+
+class StreetFoodBuilder extends FoodBuilder {
+  constructor() {
+    super();
+    this.type = "street-food";
+    // Could set default values for street food
+  }
+}
+
 const AddDish = () => {
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [currentBuilder, setCurrentBuilder] = useState(new FoodBuilder());
 
   const form = useForm({
     defaultValues: {
@@ -39,19 +161,41 @@ const AddDish = () => {
     const file = event.target.files[0];
     if (file && file.type.startsWith("image/")) {
       setImage(file);
+      currentBuilder.setImage(file);
 
       const objectUrl = URL.createObjectURL(file);
       setPreviewUrl(objectUrl);
     }
   };
 
+  // Update builder when form values change
   useEffect(() => {
+    const subscription = form.watch((value) => {
+      if (value.type && value.type !== currentBuilder.type) {
+        // Create a new builder of the appropriate type
+        const newBuilder = FoodBuilderFactory.getBuilder(value.type);
+        newBuilder
+          .setName(value.name || "")
+          .setDescription(value.description || "")
+          .setPrice(value.price || "")
+          .setImage(image);
+        setCurrentBuilder(newBuilder);
+      } else {
+        // Update existing builder
+        currentBuilder
+          .setName(value.name || "")
+          .setDescription(value.description || "")
+          .setPrice(value.price || "");
+      }
+    });
+
     return () => {
+      subscription.unsubscribe();
       if (previewUrl) {
         URL.revokeObjectURL(previewUrl);
       }
     };
-  }, [previewUrl]);
+  }, [form, previewUrl, currentBuilder, image]);
 
   const { mutate: handleSubmit, isPending } = useMutation({
     mutationKey: ["createDish"],
@@ -64,16 +208,35 @@ const AddDish = () => {
         throw new Error("Dish image is required.");
       }
 
+      // Build the final food item
+      const foodItem = currentBuilder
+        .setName(data.name)
+        .setDescription(data.description)
+        .setPrice(data.price)
+        .setType(data.type)
+        .setImage(image)
+        .build();
+
+      //Extract info out of builder
+      //Next.js doesn't support passing Complex class, object to server action
       const formData = new FormData();
-      formData.append("image", image);
-      return await createDish(data, formData);
+      formData.append("image", foodItem.image);
+      formData.append("name", foodItem.name);
+      formData.append("description", foodItem.description);
+      formData.append("price", foodItem.price);
+      formData.append("type", foodItem.type);
+
+      return await createDish(formData);
     },
     onError: (error) => {
       triggerToast(error.message || "An error occurred. Please try again.", "error");
     },
-    onSuccess: (_, values) => {
+    onSuccess: () => {
       triggerToast("Dish created successfully.");
-      form.reset(values);
+      form.reset();
+      setCurrentBuilder(new FoodBuilder());
+      setImage(null);
+      setPreviewUrl(null);
     }
   });
 

@@ -5,7 +5,7 @@ import { put } from "@vercel/blob";
 import { auth } from "@/auth";
 import { headers } from "next/headers";
 
-export async function createDish(data, formData) {
+export async function createDish(formData) {
   const session = await auth.api.getSession({
     headers: await headers()
   });
@@ -19,19 +19,23 @@ export async function createDish(data, formData) {
   }
 
   try {
+    const name = formData.get("name");
+    const description = formData.get("description");
+    const price = formData.get("price");
     const file = formData.get("image");
-    const blob = await put(file.name, file, {
+    const type = formData.get("type");
+    const blob = await put(file.name + new Date().toISOString(), file, {
       access: "public",
       allowOverwrite: true
     });
 
     await prisma.dish.create({
       data: {
-        name: data.name,
-        description: data.description,
-        price: parseInt(data.price),
+        name: name,
+        description: description,
+        price: parseInt(price),
         image: blob.url,
-        type: data.type
+        type: type
       }
     });
   } catch (error) {
