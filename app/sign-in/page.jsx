@@ -12,13 +12,13 @@ const Page = () => {
     <div className={"relative flex items-center justify-center"}>
       <div
         className={cn(
-          "relative w-full max-w-xs overflow-hidden rounded-2xl shadow-xl md:max-w-md",
+          "relative w-full max-w-[23rem] overflow-hidden rounded-2xl shadow-xl md:max-w-md",
           "z-20 bg-[url('/images/login_bg.avif')] bg-cover bg-center bg-no-repeat"
         )}
       >
         <div
           className={
-            "relative flex flex-col items-center justify-center px-5 py-20 md:px-12 md:py-28"
+            "relative flex flex-col items-center justify-center px-5 py-24 md:px-12 md:py-28"
           }
         >
           <TrueFocus
