@@ -13,6 +13,8 @@ import { useCartStore } from "@/store/useCartStore";
 import Image from "next/image";
 import { CreditCard, Plus, Minus, Trash2, Wallet } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 // Define the CartIterator class
 class CartIterator {
@@ -79,6 +81,14 @@ const Cart = () => {
   const { items, removeFromCart, updateQuantity } = useCartStore();
   const [cartIterator, setCartIterator] = useState(null);
   const DELIVERY = 60;
+  const { data: session, isPending: isSessionPending } = authClient.useSession();
+  const router = useRouter();
+
+  const handleOrderPlacement = () => {
+    if (!session) {
+      router.push("/sign-in");
+    }
+  };
 
   useEffect(() => {
     setCartIterator(new CartIterator(items));
@@ -242,7 +252,13 @@ const Cart = () => {
                 </div>
               </div>
 
-              <Button className="my-6 w-full rounded-full py-5">Confirm Order</Button>
+              <Button
+                className="my-6 w-full rounded-full py-5"
+                disabled={isSessionPending}
+                onClick={handleOrderPlacement}
+              >
+                Confirm Order
+              </Button>
             </>
           )}
         </div>

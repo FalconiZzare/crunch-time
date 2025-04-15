@@ -11,13 +11,10 @@ import { Button } from "@/components/ui/button";
 import { Plus, Minus } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useCartStore } from "@/store/useCartStore";
-import { authClient } from "@/lib/auth-client";
 
 const MenuItem = ({ item }) => {
   const [quantity, setQuantity] = React.useState(1);
   const addToCart = useCartStore((state) => state.addToCart);
-  const { data: session } = authClient.getSession();
-  console.log(session);
 
   const increaseQuantity = () => {
     setQuantity((prev) => prev + 1);
