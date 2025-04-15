@@ -12,9 +12,12 @@ import {
 import { useCartStore } from "@/store/useCartStore";
 import Image from "next/image";
 import { CreditCard, Plus, Minus, Trash2, Wallet } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, triggerToast } from "@/lib/utils";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { useMutation } from "@tanstack/react-query";
+import { createOrder } from "@/actions/createOrder";
 
 // Define the CartIterator class
 class CartIterator {
@@ -78,16 +81,40 @@ class CartIterator {
 
 const Cart = () => {
   const [paymentMethod, setPaymentMethod] = useState("cod");
-  const { items, removeFromCart, updateQuantity } = useCartStore();
+  const [open, setOpen] = useState(false);
+  const [address, setAddress] = useState("");
+  const { items, removeFromCart, updateQuantity, clearCart } = useCartStore();
   const [cartIterator, setCartIterator] = useState(null);
   const DELIVERY = 60;
   const { data: session, isPending: isSessionPending } = authClient.useSession();
   const router = useRouter();
 
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["createOrder"],
+    mutationFn: async () => {
+      return await createOrder({
+        items: cartIterator.toArray(),
+        deliveryLocation: address,
+        deliveryCharge: DELIVERY,
+        paymentMethod: paymentMethod
+      });
+    },
+    onSuccess: () => {
+      setOpen(false);
+      clearCart();
+      triggerToast("Order has been placed.");
+    },
+    onError: () => {
+      triggerToast("Failed to place order", "error");
+    }
+  });
+
   const handleOrderPlacement = () => {
     if (!session) {
       router.push("/sign-in");
+      return;
     }
+    mutate();
   };
 
   useEffect(() => {
@@ -183,7 +210,7 @@ const Cart = () => {
   const { totalItems, totalCost } = getCartSummary();
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className={"relative size-9 rounded-full hover:bg-primary/85 md:size-auto"}>
           <ShoppingBag />
@@ -210,7 +237,17 @@ const Cart = () => {
             <>
               <div className={"my-4 h-px border-[1px] border-t border-dashed border-primary/20"} />
 
-              <p className={"uppercase"}>Payment</p>
+              <p className={"uppercase"}>Location</p>
+              <Input
+                placeholder={"Type a location..."}
+                required
+                className={"mt-3 border-primary"}
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
+              />
+
+              <p className={"mt-3 uppercase"}>Payment</p>
               <Button
                 variant={"outline"}
                 className={cn(
@@ -254,7 +291,7 @@ const Cart = () => {
 
               <Button
                 className="my-6 w-full rounded-full py-5"
-                disabled={isSessionPending}
+                disabled={isSessionPending || isPending}
                 onClick={handleOrderPlacement}
               >
                 Confirm Order

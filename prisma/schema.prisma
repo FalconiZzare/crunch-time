@@ -165,11 +165,9 @@ model OrderItem {
 }
 
 model Tracking {
-  id              String @id @default(cuid())
-  orderId         String @unique
-  orderStatus     String
-  preparingStatus String
-  deliveryStatus  String
+  id          String @id @default(cuid())
+  orderId     String @unique
+  orderStatus String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
